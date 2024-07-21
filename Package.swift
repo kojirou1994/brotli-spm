@@ -13,6 +13,7 @@ let package = Package(
     .target(name: "brotlicommon", path: "Sources/common"),
     .target(name: "brotlidec", dependencies: ["brotlicommon"]),
     .target(name: "brotlienc", dependencies: ["brotlicommon"]),
+    .testTarget(name: "BrotliTests", dependencies: ["brotlidec", "brotlienc"]),
   ],
   cLanguageStandard: .c11
 )
