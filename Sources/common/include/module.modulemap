@@ -1,0 +1,4 @@
+module brotlicommon {
+  header "shim.h"
+  export *
+}

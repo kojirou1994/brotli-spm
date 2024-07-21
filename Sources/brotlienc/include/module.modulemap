@@ -1,0 +1,4 @@
+module brotlienc {
+  header "shim.h"
+  export *
+}
