@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.2
 
 import PackageDescription
 
@@ -8,17 +8,20 @@ let package = Package(
     .library(name: "brotlicommon", targets: ["brotlicommon"]),
     .library(name: "brotlidec", targets: ["brotlidec"]),
     .library(name: "brotlienc", targets: ["brotlienc"]),
+    .executable(name: "brotli", targets: ["brotli"]),
   ],
   targets: [
     .target(name: "brotlicommon", path: "Sources/common"),
     .target(name: "brotlidec", dependencies: ["brotlicommon"]),
-    .target(name: "brotlienc", dependencies: ["brotlicommon"]),
+    .target(
+      name: "brotlienc",
+      dependencies: ["brotlicommon"],
+      linkerSettings: [.linkedLibrary("m", .when(platforms: [.linux]))],
+    ),
     .testTarget(name: "BrotliTests", dependencies: ["brotlidec", "brotlienc"]),
+    .executableTarget(
+      name: "brotli",
+      dependencies: ["brotlienc", "brotlidec"],
+    ),
   ],
-  cLanguageStandard: .c11
 )
-
-#if os(macOS)
-package.products.append(.executable(name: "brotli", targets: ["brotli"]))
-package.targets.append(.executableTarget(name: "brotli", dependencies: ["brotlienc", "brotlidec"]))
-#endif
