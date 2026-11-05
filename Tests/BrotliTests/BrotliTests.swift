@@ -7,9 +7,13 @@ final class BrotliTests: XCTestCase {
   func testVersion() {
     // change with brotli updates
 
-    XCTAssertEqual(BrotliDecoderVersion(), (1 << 24) | (1 << 12) | 0)
+    let brotliVersion = (1 as UInt32, 2 as UInt32, 1 as UInt32)
 
-    XCTAssertEqual(BrotliEncoderVersion(), (1 << 24) | (1 << 12) | 0)
+    let versionNum = (brotliVersion.0 << 24) | (brotliVersion.1 << 12) | brotliVersion.2
+
+    XCTAssertEqual(BrotliDecoderVersion(), versionNum)
+
+    XCTAssertEqual(BrotliEncoderVersion(), versionNum)
   }
 
 }
