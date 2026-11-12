@@ -16,6 +16,9 @@ let package = Package(
     .target(
       name: "brotlienc",
       dependencies: ["brotlicommon"],
+      cSettings: [
+        .define("BROTLI_BUILD_ENC_EXTRA_API"),
+      ],
       linkerSettings: [.linkedLibrary("m", .when(platforms: [.linux]))],
     ),
     .testTarget(name: "BrotliTests", dependencies: ["brotlidec", "brotlienc"]),
